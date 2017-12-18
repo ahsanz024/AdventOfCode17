@@ -34,16 +34,7 @@ class Task2 {
         val len = input.length.div(2)
         val firstHalf = input.substring(0, len)
         val secondHalf = input.substring(len, input.length)
-//        val pairs = firstHalf.forEachIndexed { index, c ->
-//            print ("inde "+index)
-//            print ("char "+c)
-//            Pair(c, secondHalf[index])
-//        }
         val pairs = firstHalf.zip(secondHalf.drop(0))
-//        println("firstHalf "+firstHalf.length)
-//        println("secondHalf "+secondHalf.length)
-//        println("pars "+pairs[4].first)
-
         val result = pairs.fold(0) {acc, pair ->
             if(pair.first == pair.second) {
                 acc.plus(pair.first.toInt().minus(48))
