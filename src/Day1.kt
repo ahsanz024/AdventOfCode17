@@ -18,7 +18,6 @@ class Task1 {
         val pairs = input
                 .zipWithNext { a, b -> Pair(a,b) } + Pair(input.first(), input.last())
 
-
         val result = pairs.fold(0) { acc, elem ->
             if (elem.first.toInt() == elem.second.toInt()) { acc + elem.first.toInt().minus(48) }
             else { acc }
@@ -34,7 +33,7 @@ class Task2 {
         val len = input.length.div(2)
         val firstHalf = input.substring(0, len)
         val secondHalf = input.substring(len, input.length)
-        val pairs = firstHalf.zip(secondHalf.drop(0))
+        val pairs = firstHalf.zip(secondHalf)
         val result = pairs.fold(0) {acc, pair ->
             if(pair.first == pair.second) {
                 acc.plus(pair.first.toInt().minus(48))
@@ -42,6 +41,8 @@ class Task2 {
             } else { acc }
         }
         println(result)
+
+//  Try dropping half the list and zipping it,
     }
 }
 
