@@ -1,6 +1,7 @@
 
 fun main(args: Array<String>) {
     D2Task1()
+    D2Task2()
 }
 
 class D2Task1() {
@@ -10,11 +11,8 @@ class D2Task1() {
     private fun method() {
 //        val lines = File("day2.txt").readLines()
         val result = data.map {
-            val list = it.
-                    split(Regex("\\s"))
-                    .map {
-                        it.toInt()
-                    }
+            val list = getIntArray(it)
+
             list.max()?.minus(list.min()!!)
         }.fold(0) { acc, elem ->
             acc.plus(elem!!)
@@ -23,6 +21,44 @@ class D2Task1() {
     }
 }
 
+class D2Task2() {
+    init { method() }
+    private fun method() {
+        val result = data.fold(0) { acc: Int, e: String ->
+
+            val intArray: IntArray = getIntArray(array = e)
+
+            val r1: Int = intArray.fold(0) { acc2, elem ->
+
+                    val remList = intArray
+                            .filter { it.rem(elem)==0 }
+                    val r: Int? = remList.max()?.div(remList.min()!!)
+
+                    if (r != null && remList.size > 1) { acc2 + r }
+                    else { acc2 }
+            }
+            acc + r1
+        }
+
+    }
+}
+
+
+
+fun getIntArray(array: String): IntArray {
+    return array.
+            split(Regex("\\s"))
+            .map {
+                it.toInt()
+            }.toIntArray()
+}
+
+
+//val data = listOf(
+//        """5 9 2 8""",
+//        """9 4 7 3""",
+//        """3 8 6 5"""
+//)
 val data = listOf(
         """626	2424	2593	139	2136	163	1689	367	2235	125	2365	924	135	2583	1425	2502""",
         """183	149	3794	5221	5520	162	5430	4395	2466	1888	3999	3595	195	181	6188	4863""",
