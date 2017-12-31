@@ -6,26 +6,43 @@ fun main(args: Array<String>) {
 }
 
 fun D4Task1() {
-    val lines = File("day4.txt").readLines()
-    val total = lines.fold(0, { acc: Int, l: String ->
-        val wordArray = getWordArray(l)
-        acc + (if(findWordInLine(wordArray)) 0 else 1)
+    val total = getResult({ words, word ->
+        words.drop(1).contains(word)
     })
     println(total)
 }
-fun findWordInLine(words: List<String>): Boolean {
-    if (words.isEmpty()) return false
-    val word = words[0]
-    val res = words.drop(1).contains(word)
-    if (res) { return true }
-    return findWordInLine(words.drop(1).toList())
-}
 
 fun D4Task2() {
-//    TODO("not implemented") //To change body of created functions use File | Settings | File Templates.
+    val total = getResult({ words, word ->
+        val regularizedWord = regularizeWord(word)
+        words.drop(1).any { it -> (regularizeWord(it) == regularizedWord) }
+    })
+    println(total)
 }
 
+fun getResult(body: (list: List<String>, word: String ) -> Boolean): Int {
+    val total = getLines().fold(0, { acc: Int, l: String ->
+        val wordArray = getWordArray(l)
+        acc + findValidLines(wordArray, body)
+    })
+    return total
+}
+fun findValidLines(words: List<String>, body: (list: List<String>, word: String ) -> Boolean): Int {
+    if (words.isEmpty()) return 1
+    val word = words[0]
+    val res = body(words, word)
+    if (res) { return 0 }
+    return findValidLines(words.drop(1).toList(), body)
+}
 fun getWordArray(line: String): List<String> {
     return line.
             split(Regex("\\s"))
+}
+fun getLines(): List<String> {
+    return File("day4.txt").readLines()
+}
+//////////////////
+
+fun regularizeWord(word: String): String {
+    return word.split("").sorted().joinToString("")
 }
