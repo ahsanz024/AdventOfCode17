@@ -8,8 +8,7 @@ fun main(args: Array<String>) {
     D3Task2()
 }
 
-//val searchValueTask2 = 30
-val searchValueTask2 = 347991
+val searchValueTask = 265149
 fun D3Task2() {
     searchData(0, 0,  emptyList<Int>().toMutableList())
 }
@@ -17,7 +16,7 @@ fun D3Task2() {
 fun searchData(index: Int, acc: Int, list: MutableList<Int>): Int {
     val sum = calcSum(index, list).plus(list.getOrElse(index) {0})
     list.add(sum)
-    if (sum > searchValueTask2) {
+    if (sum > searchValueTask) {
         println("SUM "+sum)
         return sum
     }
@@ -92,8 +91,6 @@ fun getQsize(level: Int): Int = level.times(2)
 fun getSquareSize(index:Int): Int = 8.times(index)
 
 
-val searchValue = 347991
-
 fun D3Task1() {
     val diagonal = getDiagIndexAndValue(0, 1)
     val shortestDistance = diagonal.first
@@ -101,19 +98,19 @@ fun D3Task1() {
     val quarterDifference = shortestDistance.times(2)
 
     val qVal = findQuarter(diagonalValue, quarterDifference)
-    val dist = shortestDistance + (qVal.plus(quarterDifference.div(2))).minus(searchValue).absoluteValue
+    val dist = shortestDistance + (qVal.plus(quarterDifference.div(2))).minus(searchValueTask).absoluteValue
     println("dist $dist ")
 
 }
 fun getDiagIndexAndValue(i: Int, acc:Int): Pair<Int, Int> {
     val sum = calcDiagValue(i, acc)
-    if ( sum < searchValue ) return getDiagIndexAndValue(i + 1, sum)
+    if ( sum < searchValueTask ) return getDiagIndexAndValue(i + 1, sum)
     return Pair(i, sum)
 }
 fun calcDiagValue(i: Int, base: Int): Int = base.plus(getSquareSize(i))
 
 fun findQuarter(dVal: Int, qDiff: Int): Int {
     val temp = dVal.minus(qDiff)
-    if (temp > searchValue) return findQuarter(temp, qDiff)
+    if (temp > searchValueTask) return findQuarter(temp, qDiff)
     return temp
 }
